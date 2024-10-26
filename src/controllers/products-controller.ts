@@ -6,7 +6,7 @@ class ProductController {
         try {
             throw new AppError("Erro de teste")
             return response.json({ message: "ok" })
-            // o error é captaduro pela va
+            // o error é captaduro pela variavel error
         } catch (error) {
             next(error)
         }
