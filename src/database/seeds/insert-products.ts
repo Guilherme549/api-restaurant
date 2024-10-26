@@ -2,10 +2,10 @@ import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
     // Deletes ALL existing entries
-    await knex("table_name").del();
+    await knex("products").del();
 
     // Inserts seed entries
-    await knex("table_name").insert([
+    await knex("products").insert([
         { name: "Nhoque quatro queijos", price: 45 },
         { name: "Isca de frango", price: 60 },
         { name: "Tilápia com alcaparras", price: 100 },
@@ -16,6 +16,6 @@ export async function seed(knex: Knex): Promise<void> {
         { name: "Executivo de tilápia grelhada", price: 39 },
         { name: "Caldo de palmito", price: 30 },
         { name: "Refrigerante 350ml", price: 7.5 },
-        { name: "Suco de laranja 440ml", price: 10 }
+        { name: "Suco de laranja 440ml", price: 10 },
     ]);
 };
