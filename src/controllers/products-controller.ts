@@ -4,10 +4,16 @@ import { z } from "zod"
 
 class ProductController {
     async index(request: Request, response: Response, next: NextFunction){
+        const { name } = request.query
         try {
-            return response.json({ message: "ok" })
-            // o error é captaduro pela variavel error
-        } catch (error) {
+            const products = await knex<ProductRepository>("products")
+            .select()
+            .whereLike("name",`%${name ?? ""}%`)
+            .orderBy("name")
+            
+
+            return response.json(products)
+        } catch (error) { // o error é captaduro pela variavel error
             next(error)
         }
     }
