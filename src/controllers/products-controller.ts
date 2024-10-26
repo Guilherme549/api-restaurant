@@ -1,12 +1,29 @@
-import { NextFunction, Request, Response } from "express";
-import { AppError } from "@/utils/AppError";
+import { NextFunction, Request, Response } from "express"
+import { knex } from "@/database/knex"
+import { z } from "zod"
 
 class ProductController {
     async index(request: Request, response: Response, next: NextFunction){
         try {
-            throw new AppError("Erro de teste")
             return response.json({ message: "ok" })
             // o error é captaduro pela variavel error
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async create(request: Request, response: Response, next: NextFunction){
+        try {
+            const bodySchema = z.object({
+                name: z.string().trim().min(6),
+                price: z.number().gt(0, { message: "value must be greater than 0"})
+            })
+
+            const { name, price } = bodySchema.parse(request.body)
+
+            await knex<ProductRepository>("products").insert({ name, price })
+
+            return response.status(201).json()
         } catch (error) {
             next(error)
         }
