@@ -59,7 +59,7 @@ class TableSessionsController {
             if (!session){
                 throw new AppError("Session table not found")
             }
-
+            
             if (session.closed_at){
                 throw new AppError("This session table is already closed ")
             }
